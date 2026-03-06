@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
     <div class="logo">
-      <el-icon size="28" color="#1890ff"><Fish /></el-icon>
+      <el-icon size="28" color="#1890ff"><Compass /></el-icon>
       <span v-if="!collapsed" class="logo-text">渔业管理系统</span>
     </div>
     <el-menu
