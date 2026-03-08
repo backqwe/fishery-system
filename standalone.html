@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>渔业管理系统</title>
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ── Custom properties ── */
+    :root {
+      --ocean-deep:   #0a2342;
+      --ocean-mid:    #1a4a7a;
+      --ocean-light:  #2e86c1;
+      --seafoam:      #48c9b0;
+      --sand:         #f4e4bc;
+      --text-primary: #e8f4fd;
+      --text-muted:   #a8cde8;
+      --card-bg:      rgba(255, 255, 255, 0.07);
+      --card-border:  rgba(72, 201, 176, 0.3);
+      --radius:       12px;
+      --transition:   0.25s ease;
+    }
+
+    /* ── Base ── */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                   'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(160deg, var(--ocean-deep) 0%, var(--ocean-mid) 60%, var(--ocean-light) 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-thumb { background: var(--seafoam); border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      background: rgba(10, 35, 66, 0.6);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--seafoam);
+    }
+
+    .logo-icon {
+      font-size: 1.6rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--seafoam);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, var(--text-primary), var(--seafoam));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.8rem;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(72, 201, 176, 0.35);
+    }
+
+    .btn-primary {
+      background: var(--seafoam);
+      color: var(--ocean-deep);
+      border: none;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--seafoam);
+      border: 2px solid var(--seafoam);
+      margin-left: 0.75rem;
+    }
+
+    /* ── Cards grid ── */
+    .section {
+      padding: 3rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--seafoam);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--seafoam);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Stats bar ── */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      padding: 2rem;
+      background: rgba(10, 35, 66, 0.4);
+      border-top: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .stat {
+      text-align: center;
+      min-width: 120px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--seafoam);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--card-border);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <span class="logo-icon">🐟</span>
+      渔业管理系统
+    </div>
+    <nav>
+      <a href="#">总览</a>
+      <a href="#">养殖池塘</a>
+      <a href="#">水质监测</a>
+      <a href="#">饲料管理</a>
+      <a href="#">产量统计</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>智慧渔业，精细管理</h1>
+    <p>集鱼类品种、池塘状态、水质监测与产量统计于一体的综合管理平台。</p>
+    <a href="#" class="btn btn-primary">开始使用</a>
+    <a href="#" class="btn btn-outline">了解更多</a>
+  </section>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">12</div>
+      <div class="stat-label">鱼类品种</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">8</div>
+      <div class="stat-label">活跃池塘</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">96%</div>
+      <div class="stat-label">水质达标率</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">4.2t</div>
+      <div class="stat-label">本月产量</div>
+    </div>
+  </div>
+
+  <main class="section">
+    <h2 class="section-title">功能模块</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🐠</div>
+        <h3>鱼类品种管理</h3>
+        <p>记录品种信息、最适水温与生长周期。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏊</div>
+        <h3>养殖池塘管理</h3>
+        <p>池塘面积、容量及当前状态一览无余。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💧</div>
+        <h3>水质监测</h3>
+        <p>实时记录水温、pH 值、溶氧量等参数。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌾</div>
+        <h3>饲料管理</h3>
+        <p>库存管理与投喂记录，精准把控投入。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>产量统计</h3>
+        <p>捕捞记录与产量分析，数据驱动决策。</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 渔业管理系统 &mdash; MIT License
+  </footer>
+
+</body>
+</html>
