@@ -89,6 +89,12 @@
           <el-menu-item index="/system/alarm-setting">报警值设置</el-menu-item>
           <el-menu-item index="/system/log">系统日志</el-menu-item>
         </el-sub-menu>
+
+        <!-- 架构分析 -->
+        <el-menu-item index="/architecture">
+          <el-icon><DataAnalysis /></el-icon>
+          <template #title>架构可扩展性分析</template>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 
