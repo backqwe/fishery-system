@@ -186,6 +186,13 @@ const routes = [
             meta: { title: '预警阈值' }
           }
         ]
+      },
+      // ── 架构分析 ──────────────────────────────
+      {
+        path: 'architecture',
+        name: 'Architecture',
+        component: () => import('@/views/architecture/ArchAnalysis.vue'),
+        meta: { title: '架构可扩展性分析', icon: 'DataAnalysis' }
       }
     ]
   }
